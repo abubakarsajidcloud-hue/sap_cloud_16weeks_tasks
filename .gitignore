@@ -1,0 +1,50 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environments
+venv/
+.env/
+
+# Large Archives
+*.zip
+*.rar
+*.7z
+
+# Large Disk Images
+*.iso
+*.vmdk
+*.vdi
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# AWS Credentials
+.aws/
+
+# SAP Logs and Dumps
+*.trc
+*.dmp
+
+# Node
+node_modules/
+
+# Generated Files
+dist/
+build/
