@@ -1,0 +1,614 @@
+Topic: Fraud Prevention in SAP Procure-to-Pay (P2P)
+SECTION 1 — CAREER CONTEXT
+Why are you learning this?
+Almost every company using SAP buys materials worth millions of dollars every year. Without controls, employees could:
+	• Pay fake invoices
+	• Pay twice for the same goods
+	• Pay for goods never delivered
+	• Overpay suppliers
+The 3-Way Match is one of SAP's strongest financial controls to prevent these problems.
+This topic is asked frequently in SAP interviews because it connects:
+	• Business processes
+	• SAP MM
+	• SAP FI
+	• Internal controls
+	• Auditing
+	• Fraud prevention
+Why companies invest in it
+	• Prevent financial fraud
+	• Improve audit compliance
+	• Reduce invoice errors
+	• Protect company cash flow
+Why a SAP Basis Engineer should know it
+You won't configure the business rules, but you support the SAP system that enforces them. If invoice postings fail, users often contact the Basis team first. You need to know whether it's a business issue or a system issue.
+Why a SAP Cloud Engineer should know it
+When migrating SAP to the cloud, these business controls must continue working correctly. Cloud engineers monitor application availability, database health, and integrations so invoice processing is not interrupted.
+Internship Importance
+	• SAP Basis Intern: ?????
+	• SAP Technical Intern: ?????
+	• SAP Cloud Intern: ?????
+	• Cloud/DevOps Intern: ?????
+
+SECTION 2 — ROADMAP INTEGRATION
+Previous Topics
+ERP Fundamentals
+        ?
+P2P Business Process
+        ?
+Purchase Order
+        ?
+Goods Receipt
+
+Today's Topic
+3-Way Match
+Future Topics
+Invoice Verification
+        ?
+Authorizations
+        ?
+Monitoring
+        ?
+SAP Basis
+        ?
+S/4HANA
+
+
+SECTION 3 — MULTI-LEVEL EXPLANATION
+Level 1 (Beginner)
+Imagine you order a laptop online.
+Before paying, you check:
+	1. Did I order it?
+	2. Did I receive it?
+	3. Is the bill correct?
+If all three match, you pay.
+That is the 3-Way Match.
+
+Level 2 (Student)
+SAP compares:
+	• Purchase Order (PO)
+	• Goods Receipt (GR)
+	• Invoice (MIRO)
+If everything matches within allowed tolerance, SAP posts the invoice.
+Otherwise, it blocks the invoice.
+
+Level 3 (Junior Engineer)
+Invoice verification compares:
+	• Material
+	• Quantity
+	• Price
+	• Vendor
+	• Purchase Order
+Mismatch?
+	• Invoice Block
+	• Purchasing investigates
+	• Finance waits
+	• Vendor payment is delayed until resolved
+
+Level 4 (Senior Engineer)
+The 3-Way Match is a financial control mechanism integrating:
+	• MM
+	• Inventory
+	• Finance
+	• Auditing
+It reduces fraud risk, supports compliance, and ensures only valid liabilities are recorded.
+
+SECTION 4 — BIG PICTURE
+What is it?
+A verification process before paying a supplier.
+It compares:
+Purchase Order
+        ?
+Goods Receipt
+        ?
+Vendor Invoice
+
+All three must agree.
+
+Why does it exist?
+To stop companies from paying:
+	• Fake invoices
+	• Duplicate invoices
+	• Incorrect prices
+	• Goods never received
+
+If it didn't exist
+A fake supplier could send a €500,000 invoice.
+Finance pays it.
+No goods ever arrive.
+Company loses money.
+
+Automotive Example
+A car factory orders 500 tires.
+Supplier invoices 700 tires.
+Without 3-Way Match: Finance pays for 700.
+With 3-Way Match: SAP detects mismatch. Invoice blocked.
+
+Manufacturing Example
+Factory orders: 100 motors
+Warehouse receives: 95 motors
+Invoice: 100 motors
+SAP blocks invoice until shortage is resolved.
+
+FMCG Example
+A beverage company orders 5,000 bottles.
+Only 4,800 arrive.
+Supplier invoices 5,000.
+SAP blocks payment.
+
+Banking Example
+Banks also use matching concepts before releasing large payments to reduce fraud and meet audit requirements.
+
+SECTION 5 — STORY-BASED LEARNING
+Business Requirement
+Need steel sheets
+?
+Business Process
+Purchase steel
+?
+ERP Process
+Create PO
+?
+SAP Process
+ME21N
+Purchase Order
+?
+Supplier delivers
+?
+MIGO
+Goods Receipt
+?
+Supplier sends invoice
+?
+MIRO
+Invoice Verification
+?
+SAP checks
+PO
+?
+
+GR
+?
+
+Invoice
+?
+If matched
+Invoice Posted
+?
+Finance pays vendor
+
+SECTION 6 — CORE CONCEPTS
+Purchase Order (PO)
+Definition: Agreement to buy goods.
+Business Problem Solved: Defines what the company agreed to purchase.
+Analogy: A signed shopping list.
+
+Goods Receipt (GR)
+Definition: Confirmation that goods actually arrived.
+Business Problem Solved: Prevents paying before receiving goods.
+Analogy: Signing that your courier delivered the package.
+
+Invoice
+Definition: Supplier's payment request.
+Business Problem Solved: Creates the financial obligation.
+Analogy: Restaurant bill after your meal.
+
+3-Way Match
+Definition: Comparison of PO, GR, and Invoice.
+Business Problem Solved: Stops fraudulent or incorrect payments.
+Cloud Example: Even when SAP runs on AWS, the application still performs the same business validation before posting invoices.
+Interview Answer: "The 3-Way Match compares the purchase order, goods receipt, and vendor invoice. SAP only posts the invoice when these documents match within configured tolerances, helping prevent fraud and payment errors."
+
+SECTION 7 — ARCHITECTURE
+Beginner Diagram
+Purchasing
+      ¦
+Create PO
+      ¦
+Warehouse
+      ¦
+Goods Receipt
+      ¦
+Finance
+      ¦
+Invoice
+      ¦
+SAP Check
+      ¦
+Payment
+
+
+Enterprise Diagram
+SAP GUI / Fiori
+        ¦
+Application Server
+        ¦
+MM Module
+        ¦
+FI Module
+        ¦
+SAP Database
+        ¦
+Payment System
+
+Failure Points:
+	• Missing GR
+	• Wrong PO
+	• Price mismatch
+	• Quantity mismatch
+	• Incorrect vendor
+
+SECTION 8 — SAP BASIS FOCUS
+A Basis intern usually does not resolve business mismatches but may:
+	• Check if invoice posting jobs are running.
+	• Verify application server health.
+	• Review system logs if MIRO errors are technical.
+	• Confirm users have the correct authorizations.
+Daily Production Activities:
+	• Monitor work processes.
+	• Check failed background jobs.
+	• Investigate dumps if invoice posting terminates unexpectedly.
+
+SECTION 9 — SAP HANA FOCUS
+HANA stores:
+	• Purchase Orders
+	• Goods Receipts
+	• Invoice documents
+Because HANA is in-memory, matching large numbers of invoices is much faster than with traditional disk-based databases.
+
+SECTION 10 — LINUX + CLOUD
+Linux:
+	• SAP application processes run as Linux services.
+	• System logs help diagnose technical failures affecting invoice posting.
+AWS:
+	• EC2 hosts SAP application servers.
+	• EBS stores persistent data.
+	• CloudWatch monitors infrastructure health.
+	• IAM controls administrative access.
+If infrastructure fails, business users may be unable to process MIRO transactions even though the business logic is correct.
+
+SECTION 11 — Important T-Codes
+T-Code	Purpose	Intern Relevance
+ME21N	Create Purchase Order	Understand purchasing
+MIGO	Post Goods Receipt	Inventory confirmation
+MIRO	Invoice Verification	Core 3-way match step
+MRBR	Release Blocked Invoices	Resolve invoice blocks
+OMR6	Configure Tolerance Limits	Advanced customizing knowledge
+
+€2.3 Million Fraud Prevention Example
+A manufacturing company issues a PO for €2.3 million worth of industrial machines.
+A dishonest employee colludes with a supplier and submits an invoice for the full amount before any machines are delivered.
+During MIRO, SAP performs the 3-way match:
+	• PO: Exists for €2.3 million.
+	• Goods Receipt: No delivery has been posted in MIGO.
+	• Invoice: Requests payment.
+Because there is no matching Goods Receipt, SAP blocks the invoice instead of posting it for payment. If price or quantity differences exceed the tolerance configured in OMR6 (for example, a 2% price tolerance), the invoice is also blocked.
+The blocked invoice appears in MRBR, where the purchasing team investigates. They discover that no equipment has arrived, reject the invoice, and prevent a €2.3 million fraudulent payment.
+This demonstrates why the 3-way match is one of the most important internal financial controls in SAP. It ensures that a company pays only for goods that were actually ordered, received, and correctly invoiced.
+
+Troubleshooting Workshop
+Scenario 1: Invoice blocked
+	• Symptoms: MIRO displays invoice block.
+	• Investigation: Compare PO, GR, and invoice.
+	• Root Cause: Goods Receipt missing.
+	• Resolution: Post the GR or correct the invoice.
+	• Prevention: Ensure warehouse posts GR promptly.
+Scenario 2: Price mismatch
+	• Symptoms: Invoice blocked for variance.
+	• Investigation: Compare PO price with invoice.
+	• Root Cause: Supplier charged more than agreed.
+	• Resolution: Update PO (if approved) or request a corrected invoice.
+	• Prevention: Maintain accurate purchasing data.
+Scenario 3: Quantity mismatch
+	• Symptoms: Invoice quantity exceeds received quantity.
+	• Investigation: Review MIGO and invoice.
+	• Root Cause: Partial delivery or incorrect invoice.
+	• Resolution: Wait for remaining delivery or correct the invoice.
+	• Prevention: Coordinate warehouse and purchasing activities.
+
+Internship Readiness
+Current readiness for this topic:
+	• Business Understanding: 90%
+	• SAP Process Knowledge: 80%
+	• Basis Relevance: 65%
+	• Cloud Relevance: 60%
+	• Interview Readiness: 85%
+Next topic to learn: Invoice blocking, payment processing, and automatic payment using F110, followed by authorization concepts and monitoring. These topics build directly on the 3-way match and are commonly discussed in SAP Basis and SAP Technical internship interviews.
+
+Important details 
+
+Yes. You can think of it like this:
+	• P2P (Procure-to-Pay) = Complete business process (15+ steps in large companies)
+	• 3-Way Match = A critical control process inside P2P that mainly involves 3 business documents: 
+		1. Purchase Order (PO)
+		2. Goods Receipt (GR)
+		3. Vendor Invoice (MIRO)
+It is not a separate ERP business process like P2P; it is a financial control mechanism within P2P.
+
+Where does the 3-Way Match fit in P2P?
+Business Need
+      ?
+Purchase Requisition
+      ?
+Purchase Order (PO)   ? Step 1 of 3-Way Match
+      ?
+Vendor Delivery
+      ?
+Goods Receipt (GR)    ? Step 2 of 3-Way Match
+      ?
+Invoice Verification   ? Step 3 of 3-Way Match
+      ?
+Automatic 3-Way Match
+      ?
+Payment
+
+
+Step 1 — Purchase Order (PO)
+Goal
+A Purchase Order is the company's official promise to buy specific goods or services from a vendor.
+It answers:
+	• What will we buy?
+	• From whom?
+	• How many?
+	• At what price?
+	• When should it be delivered?
+Without a PO, anyone could submit an invoice and claim payment.
+
+SAP Module
+	• SAP MM (Materials Management)
+
+Main T-Code
+	• ME21N – Create Purchase Order
+	• ME22N – Change Purchase Order
+	• ME23N – Display Purchase Order
+
+Business User
+	• Purchasing Officer
+	• Procurement Team
+	• Buyer
+
+Example
+Toyota needs:
+	• 100 car tires
+	• Price = €100 each
+Purchase Order:
+Vendor: ABC Tires
+Quantity: 100
+Price: €100
+Total:
+€10,000
+SAP now knows exactly what the company agreed to buy.
+
+SAP Basis Role
+Normally no direct involvement, but Basis engineers:
+	• Ensure the MM application is available.
+	• Monitor performance.
+	• Resolve technical errors if users cannot create POs.
+
+Cloud/DevOps Role
+Cloud engineers ensure:
+	• SAP application servers are running.
+	• Database is healthy.
+	• Storage and networking are available.
+	• Users can access SAP without outages.
+
+Step 2 — Goods Receipt (GR)
+Goal
+The warehouse confirms that the ordered goods actually arrived.
+This answers:
+	• Did the vendor deliver?
+	• How many items arrived?
+	• Were they received on time?
+Without a Goods Receipt, SAP cannot verify physical delivery.
+
+SAP Module
+	• SAP MM (Inventory Management/Warehouse)
+
+Main T-Code
+	• MIGO
+
+Business User
+	• Warehouse Operator
+	• Storekeeper
+	• Receiving Department
+
+Example
+PO:
+100 tires ordered
+Truck arrives.
+Warehouse counts:
+100 tires received
+Warehouse posts:
+Goods Receipt
+SAP inventory increases.
+
+Database Updates
+SAP updates:
+	• Inventory
+	• Material stock
+	• Accounting entries
+	• Purchase Order history
+
+Basis Role
+Basis engineers monitor:
+	• Posting performance.
+	• Background jobs.
+	• Database consistency.
+	• Application logs if MIGO fails.
+
+Cloud Role
+Cloud engineers ensure:
+	• Low latency between application and database.
+	• Reliable storage.
+	• High availability for warehouse operations.
+
+Step 3 — Invoice Verification
+Goal
+The supplier sends an invoice requesting payment.
+SAP checks whether the invoice is legitimate before allowing payment.
+
+SAP Module
+	• SAP MM
+	• SAP FI (Financial Accounting)
+This is where MM and FI work together.
+
+Main T-Code
+	• MIRO – Enter Vendor Invoice
+Supporting T-Codes:
+	• MRBR – Release blocked invoices
+	• OMR6 – Configure tolerance limits
+
+Business User
+	• Accounts Payable
+	• Finance Department
+
+Example
+Supplier invoice:
+100 tires
+€100 each
+Total
+€10,000
+Finance enters the invoice using MIRO.
+SAP automatically starts the 3-Way Match.
+
+How SAP Performs the 3-Way Match
+SAP compares these three documents:
+Document	Question
+Purchase Order	What was ordered?
+Goods Receipt	What was actually received?
+Invoice	What is the vendor requesting payment for?
+SAP compares:
+	• Vendor
+	• Material
+	• Quantity
+	• Price
+	• Currency
+	• Purchase Order number
+
+Real-Life Fraud Example
+A company orders industrial machines worth €2.3 million.
+Step 1
+Purchasing creates:
+PO
+€2.3 million
+
+Step 2
+The supplier has not delivered any machines.
+No Goods Receipt exists.
+
+Step 3
+A dishonest supplier sends this invoice:
+Invoice
+€2.3 million
+Finance enters it into MIRO.
+
+SAP Checks
+Purchase Order?
+? Exists
+
+Goods Receipt?
+? Not found
+
+Invoice?
+Exists
+
+Result
+PO
+   ?
+GR
+   ?
+Invoice
+   ?
+The 3-Way Match fails.
+SAP blocks the invoice.
+No payment is made.
+The invoice is placed in MRBR for review by the purchasing and finance teams.
+The company avoids losing €2.3 million.
+
+Price Fraud Example
+Purchase Order
+100 laptops
+$1,000 each
+Vendor invoice
+100 laptops
+$1,500 each
+Difference:
+50%
+Tolerance:
+2%
+SAP compares:
+PO Price
+?
+
+$1,000
+Invoice Price
+?
+
+$1,500
+Since the price exceeds the configured tolerance, SAP blocks the invoice.
+
+Quantity Fraud Example
+Purchase Order
+100 chairs
+Warehouse receives
+100 chairs
+Supplier invoice
+150 chairs
+SAP compares:
+PO
+100
+?
+
+GR
+100
+?
+
+Invoice
+150
+Mismatch detected.
+Invoice blocked.
+
+Duplicate Invoice Fraud
+Sometimes a supplier (or an attacker) sends the same invoice twice hoping to be paid twice.
+Example:
+Invoice No.
+INV-1001
+Paid once.
+Later, the same invoice number is submitted again.
+SAP checks the invoice number, vendor, amount, and other details.
+If duplicate invoice checking is enabled, SAP rejects or blocks the second invoice, preventing duplicate payment.
+
+Tolerance Limits (OMR6)
+Companies define acceptable differences.
+Example:
+Difference	Result
+1%	Invoice accepted
+2%	Invoice accepted (if within company policy)
+5%	Invoice blocked
+20%	Invoice blocked immediately
+These tolerance limits allow small real-world differences (such as minor rounding or shipping adjustments) while preventing significant errors or fraud.
+
+What Does a SAP Basis Engineer Do Here?
+Although Basis engineers do not approve invoices, they support the technical platform:
+	• Ensure MIRO, MIGO, and ME21N are available.
+	• Monitor SAP application servers and databases.
+	• Check work processes if postings are slow.
+	• Analyze dumps or logs for technical failures.
+	• Support users with authorization issues.
+
+What Does a SAP Cloud/DevOps Engineer Do?
+Cloud/DevOps engineers keep the infrastructure reliable:
+	• Maintain SAP application servers on cloud VMs.
+	• Monitor CPU, memory, disk, and network.
+	• Ensure databases remain available.
+	• Configure backups and disaster recovery.
+	• Automate deployments and system monitoring.
+	• Keep integrations with vendor systems secure and available.
+
+Why Interviewers Love This Topic
+The 3-Way Match combines business knowledge and technical understanding. It shows that you understand:
+	• How procurement works.
+	• How finance protects company money.
+	• How SAP MM and FI integrate.
+	• How ERP systems enforce internal controls.
+	• Why SAP is trusted by large enterprises to prevent fraud and payment errors.
+This is why questions about the 3-Way Match (PO + GR + Invoice) appear in many SAP MM, SAP Basis, SAP Technical, and ERP support interviews, even though Basis engineers are not the ones performing invoice verification. It demonstrates your understanding of the business processes that the SAP platform is built to support.
